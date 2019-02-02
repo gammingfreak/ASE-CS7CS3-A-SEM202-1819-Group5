@@ -3,7 +3,7 @@ from django.http import Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from polls.jsonHandler import getBikeStandData
+from polls.jsonHandler import getBikeStandData, getBikeStandNames
 
 from .models import Question
 def index(request):
@@ -44,9 +44,11 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 def index1(request):
-    data_list = getBikeStandData()
-    template = loader.get_template('polls/index1.html')
+    bike_name_data_list = getBikeStandNames()
+    bike_full_data_list = getBikeStandData()
+    template = loader.get_template('polls/dublinbike.html')
     context = {
-        'data_list': data_list,
+        'bike_name_data_list': bike_name_data_list,
+        'bike_full_data_list':bike_full_data_list,
     }
     return HttpResponse(template.render(context, request))
